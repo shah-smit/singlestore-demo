@@ -2,7 +2,9 @@
 
 1M 1 by 1 insert: Elapsed time: 0:06:31.116132 (6 Mins)
 
-100K 1 by 1 insert: Elapsed time: 0:00:38.924627 (38 Seconds)
+100K 1 by 1 insert: Elapsed time: 0:00:43.442294 (43 Seconds)
+
+select name, sum(amt) from my_table GROUP BY name; <-- 81ms
 
 
 Load Data Sample:
@@ -31,7 +33,7 @@ conn = s2.connect(host="localhost", port=3306, user="root", password="3pADCT1rVY
 cursor = conn.cursor()
 cursor.execute("CREATE DATABASE IF NOT EXISTS my_database")
 cursor.execute("USE my_database")
-cursor.execute("CREATE TABLE IF NOT EXISTS my_table (id INT PRIMARY KEY, data JSON)")
+cursor.execute("CREATE TABLE IF NOT EXISTS my_table (id INT PRIMARY KEY, name varchar(10), amt INT, data JSON)")
 cursor.close()
 
 
@@ -44,7 +46,7 @@ for i in range(num_records):
 
     # Insert the data into SingleStore
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO my_table (id, data) VALUES (%s, %s)", (json_data["id"], json.dumps(json_data)))
+    cursor.execute("INSERT INTO my_table (id, name, amt, data) VALUES (%s, %s, %s, %s)", (json_data["id"], random.choice(["Alice", "Bob", "Charlie", "David"]), random.randint(1, 100000), json.dumps(json_data)))
     cursor.close()
 
 print("Data generated and loaded successfully!")
