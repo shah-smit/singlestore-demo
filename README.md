@@ -1,5 +1,7 @@
 # singlestore-demo
 
+1M 1 by 1 insert: Elapsed time: 0:06:31.116132 (6 Mins)
+
 100K 1 by 1 insert: Elapsed time: 0:00:38.924627 (38 Seconds)
 
 
